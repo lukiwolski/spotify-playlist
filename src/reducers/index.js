@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
-import { ADD_TRACK } from '../actions';
+import { ADD_TRACK, PROMPT_TRACK } from '../actions';
 
-const tracks = (state = [], action) => {
+const tracks = (state = {}, action) => {
   switch (action.type) {
-    case ADD_TRACK:
-      return [
+    case PROMPT_TRACK:
+    console.log(state)
+      return {
         ...state,
-        'traktor',
-      ];
+        artist: action[artist],
+        title: action[title],
+      };
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { zaloguj, requestPosts } from '../actions';
+import { fetchPosts } from '../actions';
 
 class Input extends React.Component {
   constructor() {
@@ -19,20 +19,33 @@ class Input extends React.Component {
     });
   }
 
-  searchClicked() {
+  searchClicked(e) {
+    e.preventDefault();
+
     const { dispatch } = this.props;
-    dispatch(requestPosts('costam'));
-    
+    const { query } = this.state;
+
+    dispatch(fetchPosts(query));
+    console.log(this.props)
   }
 
   render() {
     return (
-      <div>
+      <form onSubmit={this.searchClicked}>
+        <h1>Prompty: {this.props.promptTitle}</h1>
         <input onChange={this.queryChanged} placeholder="Find a track" />
-        <button onClick={this.searchClicked}>Search</button>
-      </div>
+        <button>Search</button>
+      </form>
     );
   }
 }
 
-export default connect()(Input);
+Input.propTypes = {
+  dispatch: React.PropTypes.func,
+};
+
+const mapStateToProps = (state) => ({
+  promptTitle: state.tracks.artist,
+});
+
+export default connect(mapStateToProps)(Input);
