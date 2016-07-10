@@ -1,4 +1,5 @@
 import React from 'react';
+import Autocomplete from '../components/Autocomplete';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions';
 
@@ -6,46 +7,60 @@ class Input extends React.Component {
   constructor() {
     super();
 
-    this.searchClicked = this.searchClicked.bind(this);
     this.queryChanged = this.queryChanged.bind(this);
+    this.addToQueue = this.addToQueue.bind(this);
     this.state = {
       query: '',
+      timeout: null,
     };
   }
 
+  addToQueue() {
+    console.log(this.props);
+  }
+
   queryChanged({ currentTarget: t }) {
+    const { query } = this.state;
+    const { searchQuery } = this.props;
+
     this.setState({
       query: t.value,
     });
-  }
 
-  searchClicked(e) {
-    e.preventDefault();
+    clearTimeout(this.timeout);
 
-    const { dispatch } = this.props;
-    const { query } = this.state;
-
-    dispatch(fetchPosts(query));
-    console.log(this.props)
+    this.timeout = setTimeout(() => {
+      searchQuery(query);
+    }, 1000);
   }
 
   render() {
+    const { queryResponse } = this.props;
+
     return (
-      <form onSubmit={this.searchClicked}>
-        <h1>Prompty: {this.props.promptTitle}</h1>
+      <div>
         <input onChange={this.queryChanged} placeholder="Find a track" />
-        <button>Search</button>
-      </form>
+        <Autocomplete hint={queryResponse} handleClick={this.addToQueue} />
+      </div>
     );
   }
 }
 
 Input.propTypes = {
   dispatch: React.PropTypes.func,
+  queryResponse: React.PropTypes.array,
+  searchQuery: React.PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  promptTitle: state.tracks.artist,
+const mapStateToProps = ({ searchedTracks }) => ({
+  queryResponse: searchedTracks,
 });
 
-export default connect(mapStateToProps)(Input);
+const mapDispatchToProps = (dispatch) => ({
+  searchQuery: (query) => dispatch(fetchPosts(query)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Input);

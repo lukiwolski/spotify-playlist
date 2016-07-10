@@ -8,12 +8,11 @@ export function requestPosts(title) {
 
 export const PROMPT_TRACK = 'PROMPT_TRACK';
 function promptTrack(trackData) {
-  const firstTrack = trackData.tracks.items[0];
+  const firstMatch = trackData.tracks.items[0];
 
   return {
     type: PROMPT_TRACK,
-    artist: firstTrack.artists[0].name,
-    title: firstTrack.name,
+    trackInfo: firstMatch,
   };
 }
 

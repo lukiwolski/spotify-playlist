@@ -1,22 +1,21 @@
 import { combineReducers } from 'redux';
 import { ADD_TRACK, PROMPT_TRACK } from '../actions';
+import { trackHint } from '../utils';
 
-const tracks = (state = {}, action) => {
+const searchedTracks = (state = [], action) => {
   switch (action.type) {
     case PROMPT_TRACK:
-    console.log(state)
-      return {
+      return [
         ...state,
-        artist: action[artist],
-        title: action[title],
-      };
+        trackHint(action.trackInfo),
+      ];
     default:
       return state;
   }
 };
 
 const rootReducer = combineReducers({
-  tracks,
+  searchedTracks,
 });
 
 export default rootReducer;
