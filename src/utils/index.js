@@ -1,11 +1,24 @@
-import * as R from 'ramda';
-import * as Maybe from 'data.maybe';
+import R from 'ramda';
 
-const loggit = t => console.log(t)
+const songName = R.prop('name');
 
-const songName = a => R.prop('name', a)
+const artistName = R.prop('name', R.prop('artists'));
 
-const artistName = a => R.prop('name', R.prop('artists', a)[0])
+const coverImage = R.compose(R.prop('images'), R.prop('album'));
 
-export const trackHint = R.compose(loggit, artistName)
+const previewSong = R.prop('preview_url');
 
+export const trackHint = a => {
+  if (a.length > 0 && typeof R.last(a) !== 'undefined') {
+    return `${artistName(R.last(a))} - ${songName(R.last(a))}`;
+  }
+  return a;
+};
+
+export const trackDetails = a => ({
+  loggit: a,
+  artist: artistName(a),
+  title: songName(a),
+  image: coverImage(a),
+  song: previewSong(a),
+});
