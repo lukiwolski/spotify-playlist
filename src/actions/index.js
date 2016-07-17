@@ -1,10 +1,20 @@
+import { checkResponse } from '../utils';
+
+export const ADD_TRACK = 'ADD_TRACK';
+export const addTrack = trackData => ({
+  type: ADD_TRACK,
+  track: trackData,
+});
+
 export const PROMPT_TRACK = 'PROMPT_TRACK';
+export const NO_MATCH = 'NO_MATCH';
 function promptTrack(trackData) {
-  const firstMatch = trackData.tracks.items[0];
+  const response = checkResponse(trackData);
+  const type = response.error ? NO_MATCH : PROMPT_TRACK;
 
   return {
-    type: PROMPT_TRACK,
-    trackInfo: firstMatch,
+    type,
+    trackInfo: response,
   };
 }
 
@@ -15,9 +25,8 @@ export const fetchPosts = query => dispatch => (
       .catch(error => error)
 );
 
-export const ADD_TRACK = 'ADD_TRACK';
-export const addTrack = trackData => ({
-  type: ADD_TRACK,
-  track: trackData,
+export const PLAY_TRACK = 'PLAY_TRACK';
+export const playTrack = (indexNumber) => ({
+  type: PLAY_TRACK,
+  indexNumber,
 });
-

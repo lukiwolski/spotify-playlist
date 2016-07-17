@@ -1,24 +1,56 @@
 import R from 'ramda';
 
-const songName = R.prop('name');
-
-const artistName = R.prop('name', R.prop('artists'));
-
-const coverImage = R.compose(R.prop('images'), R.prop('album'));
-
-const previewSong = R.prop('preview_url');
-
-export const trackHint = a => {
-  if (a.length > 0 && typeof R.last(a) !== 'undefined') {
-    return `${artistName(R.last(a))} - ${songName(R.last(a))}`;
-  }
-  return a;
+const loggit = x => {
+  console.log(x);
+  return x;
 };
 
-export const trackDetails = a => ({
-  loggit: a,
-  artist: artistName(a),
-  title: songName(a),
-  image: coverImage(a),
-  song: previewSong(a),
+const getName = R.prop('name');
+
+const getId = R.prop('id');
+
+const getIndex = x => z => z[x];
+
+const getArtist = R.compose(getName, getIndex(0), R.prop('artists'));
+
+const getCoverImage = R.compose(R.prop('url'), getIndex(1), R.prop('images'), R.prop('album'));
+
+const songUrl = R.prop('preview_url');
+
+const firstMatch = R.compose(getIndex(0), R.prop('items'), R.prop('tracks'));
+
+const noMatches = () => ({
+  error: 'No Results for this query',
 });
+
+const createAudioObject = x => new Audio(x);
+
+const makeTrackAudio = R.compose(createAudioObject, songUrl);
+
+export const checkResponse = R.either(firstMatch, noMatches);
+
+export const trackHint = x => `${getArtist(x)} - ${getName(x)}`;
+
+export const trackDetails = x => ({
+  artist: getArtist(x),
+  title: getName(x),
+  image: getCoverImage(x),
+  song: makeTrackAudio(x),
+  id: getId(x),
+  isPlaying: false,
+});
+
+export const isInTheList = (item, list) => R.contains(R.prop('id', item), R.map(getId, list));
+
+export const updatePlayingProps = (index, list) => {
+  return list.map((val, i) => {
+    let isPlaying = false;
+
+    if (i === index) isPlaying = true;
+
+    return {
+      ...val,
+      isPlaying,
+    }
+  })
+};

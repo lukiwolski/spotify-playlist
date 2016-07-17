@@ -1,6 +1,8 @@
 {
-  "extends": "airbnb",  
-  "ecmaFeatures": {
-    "experimentalObjectRestSpread": true
+  "extends": "airbnb",
+  "parserOptions":{
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
   }
 }

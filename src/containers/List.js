@@ -1,17 +1,23 @@
 import React from 'react';
+import Track from '../components/Track';
 import { connect } from 'react-redux';
 
 class List extends React.Component {
   render() {
     const { trackList } = this.props;
 
-    {trackList.map(x => {
-      console.log(x)
-    })}
-
     return (
-      <div>List</div>
-    )
+      <ul>
+        {trackList.map((track, index) =>
+          <Track
+            key={index}
+            title={track.title}
+            artist={track.artist}
+            cover={track.image}
+          />
+        )}
+      </ul>
+    );
   }
 }
 
