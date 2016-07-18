@@ -1,10 +1,11 @@
 import React from 'react';
+import { liStyles, spanStyles } from '../styles';
 
 const Track = ({ title, artist, cover }) =>
-  <li>
+  <li style={liStyles}>
     <img src={cover} role="presentation" />
-    <span>{artist}</span>
-    <span>{title}</span>
+    <span style={spanStyles}>{artist}</span>
+    <span style={spanStyles}>{title}</span>
   </li>;
 
 Track.propTypes = {

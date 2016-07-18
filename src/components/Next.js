@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Next = () =>
-  <div>
+const Next = ({ handleClick }) =>
+  <div onClick={handleClick}>
     Next Button
-  </div>
+  </div>;
 
 Next.propTypes = {
+  handleClick: React.PropTypes.func,
 };
 
 export default Next;

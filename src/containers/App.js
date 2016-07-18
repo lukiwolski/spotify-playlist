@@ -7,13 +7,13 @@ import PlayControls from './PlayControls';
 class App extends React.Component {
   componentDidMount() {
   }
-  
+
   render() {
     return (
       <div>
         <Input />
-        <List />
         <PlayControls />
+        <List />
       </div>
     );
   }

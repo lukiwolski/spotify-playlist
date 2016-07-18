@@ -3,6 +3,7 @@ import Autocomplete from '../components/Autocomplete';
 import { connect } from 'react-redux';
 import { fetchPosts, addTrack } from '../actions';
 import { trackHint, isInTheList } from '../utils';
+import { inputStyles, inputContainerStyles } from '../styles';
 import R from 'ramda';
 
 class Input extends React.Component {
@@ -59,8 +60,8 @@ class Input extends React.Component {
     }
 
     return (
-      <div>
-        <input onKeyUp={this.queryChanged} placeholder="Look for a song" />
+      <div style={inputContainerStyles}>
+        <input style={inputStyles} onKeyUp={this.queryChanged} placeholder="Look for a song" />
         {autocomplete}
       </div>
     );

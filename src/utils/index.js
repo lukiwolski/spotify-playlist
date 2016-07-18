@@ -51,6 +51,10 @@ export const updatePlayingProps = (index, list) => {
     return {
       ...val,
       isPlaying,
-    }
-  })
+    };
+  });
 };
+
+export const incrementTrackIndex = (index, length) => (
+  R.add(index, 1) < length ? R.add(index, 1) : 0
+);

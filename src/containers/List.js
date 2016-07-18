@@ -1,13 +1,14 @@
 import React from 'react';
 import Track from '../components/Track';
 import { connect } from 'react-redux';
+import { listStyles } from '../styles';
 
 class List extends React.Component {
   render() {
     const { trackList } = this.props;
 
     return (
-      <ul>
+      <ul style={listStyles}>
         {trackList.map((track, index) =>
           <Track
             key={index}
