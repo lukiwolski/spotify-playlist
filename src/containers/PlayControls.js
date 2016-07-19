@@ -44,13 +44,19 @@ class PlayControls extends React.Component {
     const { currentTrackIndex } = this.state;
     const { trackList } = this.props;
 
-    // TODO stop error when clicking next on the last track
     if (!trackList.length) return;
 
     this.stopPlaying();
-    this.setState({
-      currentTrackIndex: incrementTrackIndex(currentTrackIndex, trackList.length),
-    }, () => { this.startPlaying(); });
+
+    if (currentTrackIndex === trackList.length - 1) {
+      this.setState({
+        currentTrackIndex: incrementTrackIndex(currentTrackIndex, trackList.length),
+      });
+    } else {
+      this.setState({
+        currentTrackIndex: incrementTrackIndex(currentTrackIndex, trackList.length),
+      }, this.startPlaying);
+    }
   }
 
   render() {

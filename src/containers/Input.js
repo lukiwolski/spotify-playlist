@@ -14,6 +14,7 @@ class Input extends React.Component {
     this.addToQueue = this.addToQueue.bind(this);
     this.state = {
       timeout: null,
+      showTooltip: true,
     };
   }
 
@@ -23,6 +24,7 @@ class Input extends React.Component {
     // Preventing multiple addition of the same result
     if (!isInTheList(R.last(queryResponse), trackList)) {
       addPlaylistTrack(R.last(queryResponse));
+      this.setState({ showTooltip: false });
     }
   }
 
@@ -34,12 +36,14 @@ class Input extends React.Component {
     this.timeout = setTimeout(() => {
       if (t.value.length > 2) {
         searchQuery(t.value);
+        this.setState({ showTooltip: true });
       }
     }, 1000);
   }
 
   render() {
     const { queryResponse, responseStatus } = this.props;
+    const { showTooltip } = this.state;
     let autocomplete;
 
     if (queryResponse.length) {
@@ -62,7 +66,7 @@ class Input extends React.Component {
     return (
       <div style={inputContainerStyles}>
         <input style={inputStyles} onKeyUp={this.queryChanged} placeholder="Look for a song" />
-        {autocomplete}
+        {showTooltip ? autocomplete : ''}
       </div>
     );
   }

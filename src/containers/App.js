@@ -4,19 +4,11 @@ import { connect } from 'react-redux';
 import List from './List';
 import PlayControls from './PlayControls';
 
-class App extends React.Component {
-  componentDidMount() {
-  }
-
-  render() {
-    return (
-      <div>
-        <Input />
-        <PlayControls />
-        <List />
-      </div>
-    );
-  }
-}
+const App = () =>
+  <div>
+    <Input />
+    <PlayControls />
+    <List />
+  </div>;
 
 export default connect()(App);

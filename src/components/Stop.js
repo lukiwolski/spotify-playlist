@@ -1,9 +1,8 @@
 import React from 'react';
+import { buttonStyles } from '../styles';
 
 const Stop = ({ handleClick }) =>
-  <div onClick={handleClick}>
-    Stop Button
-  </div>;
+  <button style={buttonStyles} onClick={handleClick}>Stop</button>;
 
 Stop.propTypes = {
   handleClick: React.PropTypes.func,
