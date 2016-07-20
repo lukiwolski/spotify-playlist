@@ -1,6 +1,8 @@
 import React from 'react';
 import { liStyles, spanStyles, iconLike, iconDislike } from '../styles';
 import { FaArrowCircleDown, FaArrowCircleUp } from 'react-icons/lib/fa';
+import { upVoteTrack, downVoteTrack } from '../actions';
+import { connect } from 'react-redux';
 
 class Track extends React.Component {
   constructor() {
@@ -11,11 +13,15 @@ class Track extends React.Component {
   }
 
   upVote() {
-    console.log('dispatching upvote');
+    const { trackIndex, dispatchUpVote } = this.props;
+
+    dispatchUpVote(trackIndex);
   }
 
   downVote() {
-    console.log('dispatching downvote');
+    const { trackIndex, dispatchDownVote } = this.props;
+
+    dispatchDownVote(trackIndex);
   }
 
   render() {
@@ -39,6 +45,18 @@ Track.propTypes = {
   title: React.PropTypes.string,
   handleClick: React.PropTypes.func,
   key: React.PropTypes.number,
+  trackIndex: React.PropTypes.number,
+  dispatchDownVote: React.PropTypes.func,
+  dispatchUpVote: React.PropTypes.func,
 };
 
-export default Track;
+
+const mapDispatchToProps = dispatch => ({
+  dispatchUpVote: trackIndex => dispatch(upVoteTrack(trackIndex)),
+  dispatchDownVote: trackIndex => dispatch(downVoteTrack(trackIndex)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Track);

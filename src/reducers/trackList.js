@@ -1,5 +1,5 @@
-import { ADD_TRACK, PLAY_TRACK } from '../actions';
-import { trackDetails, updatePlayingProps } from '../utils';
+import { ADD_TRACK, PLAY_TRACK, UPVOTE, DOWNVOTE } from '../actions';
+import { trackDetails, updatePlayingProps, updateLikes } from '../utils';
 
 export const trackList = (state = [], action) => {
   switch (action.type) {
@@ -10,6 +10,10 @@ export const trackList = (state = [], action) => {
       ];
     case PLAY_TRACK:
       return updatePlayingProps(action.indexNumber, state);
+    case UPVOTE:
+      return updateLikes(action.indexNumber, state, UPVOTE);
+    case DOWNVOTE:
+      return updateLikes(action.indexNumber, state, DOWNVOTE);
     default:
       return state;
   }

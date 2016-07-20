@@ -30,3 +30,15 @@ export const playTrack = (indexNumber) => ({
   type: PLAY_TRACK,
   indexNumber,
 });
+
+export const UPVOTE = 'UPVOTE';
+export const upVoteTrack = (indexNumber) => ({
+  type: UPVOTE,
+  indexNumber,
+});
+
+export const DOWNVOTE = 'DOWNVOTE';
+export const downVoteTrack = (indexNumber) => ({
+  type: DOWNVOTE,
+  indexNumber,
+});

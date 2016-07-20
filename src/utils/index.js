@@ -1,3 +1,4 @@
+import { UPVOTE, DOWNVOTE } from '../actions';
 import R from 'ramda';
 
 const loggit = x => {
@@ -38,12 +39,13 @@ export const trackDetails = x => ({
   song: makeTrackAudio(x),
   id: getId(x),
   isPlaying: false,
+  likes: 0,
 });
 
 export const isInTheList = (item, list) => R.contains(R.prop('id', item), R.map(getId, list));
 
-export const updatePlayingProps = (index, list) => {
-  return list.map((val, i) => {
+export const updatePlayingProps = (index, list) =>
+  list.map((val, i) => {
     let isPlaying = false;
 
     if (i === index) isPlaying = true;
@@ -53,8 +55,29 @@ export const updatePlayingProps = (index, list) => {
       isPlaying,
     };
   });
-};
 
 export const incrementTrackIndex = (index, length) => (
   R.add(index, 1) < length ? R.add(index, 1) : 0
 );
+
+export const updateLikes = (index, list, action) =>
+  list.map((val, i) => {
+    if (i === index) {
+      let likes = val.likes;
+
+      if (action === DOWNVOTE && val.likes !== 0) {
+        likes = R.subtract(val.likes, 1);
+      }
+
+      if (action === UPVOTE) {
+        likes = R.add(val.likes, 1);
+      }
+
+      return {
+        ...val,
+        likes,
+      };
+    }
+    return val;
+  });
+

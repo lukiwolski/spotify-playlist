@@ -8,6 +8,7 @@ const List = ({ trackList }) =>
     {trackList.map((track, index) =>
       <Track
         key={index}
+        trackIndex={index}
         title={track.title}
         artist={track.artist}
         cover={track.image}
