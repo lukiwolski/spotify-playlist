@@ -1,8 +1,10 @@
 import React from 'react';
-import { liStyles, spanStyles, iconLike, iconDislike } from '../styles';
-import { FaArrowCircleDown, FaArrowCircleUp } from 'react-icons/lib/fa';
 import { upVoteTrack, downVoteTrack } from '../actions';
 import { connect } from 'react-redux';
+import { FaArrowCircleDown, FaArrowCircleUp } from 'react-icons/lib/fa';
+import style from '../style.css';
+
+const styleDown = `${style.button_vote} ${style.button_down}`;
 
 class Track extends React.Component {
   constructor() {
@@ -25,21 +27,30 @@ class Track extends React.Component {
   }
 
   render() {
-    const { title, artist, cover } = this.props;
+    const { title, artist, cover, isPlaying } = this.props;
+
+    const trackStatus = isPlaying ? { opacity: 1 } : { opacity: 0.3 };
 
     return (
-      <li style={liStyles}>
-        <img src={cover} role="presentation" />
-        <span style={spanStyles}>{artist}</span>
-        <span style={spanStyles}>{title}</span>
-        <FaArrowCircleUp style={iconLike} onClick={this.upVote} />
-        <FaArrowCircleDown style={iconDislike} onClick={this.downVote} />
+      <li >
+        <img src={cover} role="presentation" style={trackStatus} />
+        <span className={style.title}>{title}</span>
+        <span className={style.artist}>{artist}</span>
+        <FaArrowCircleUp
+          onClick={this.upVote}
+          className={style.button_vote}
+        />
+        <FaArrowCircleDown
+          onClick={this.downVote}
+          className={styleDown}
+        />
       </li>
     );
   }
 }
 
 Track.propTypes = {
+  isPlaying: React.PropTypes.bool,
   cover: React.PropTypes.string,
   artist: React.PropTypes.string,
   title: React.PropTypes.string,

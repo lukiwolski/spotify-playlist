@@ -31,6 +31,12 @@ export const playTrack = (indexNumber) => ({
   indexNumber,
 });
 
+export const STOP_TRACK = 'STOP_TRACK';
+export const stopTrack = (indexNumber) => ({
+  type: STOP_TRACK,
+  indexNumber,
+});
+
 export const UPVOTE = 'UPVOTE';
 export const upVoteTrack = (indexNumber) => ({
   type: UPVOTE,

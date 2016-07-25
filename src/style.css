@@ -1,0 +1,106 @@
+body {
+  background: #262626;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+li {
+  color: #e6e6e6;
+  margin-bottom: 30px;
+  list-style: none;
+}
+
+.container_input {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+  padding-top: 15px;
+}
+
+.input {
+  padding: 5px 15px;
+  width: 300px;
+  border-radius: 30px;
+  border: 0;
+  line-height: 22px;
+}
+
+.input:focus,
+.control_button:focus {
+  outline: none;
+}
+
+.autocomplete {
+  position: absolute;
+  top: 50px;
+  width: 300px;
+  text-align: left;
+  padding: 8px 15px;
+  left: 50%;
+  transform: translatex(-50%);
+  font-weight: bold;
+  cursor: pointer;
+  color: #e6e6e6;
+  border: 1px solid #000;
+}
+
+.container_control {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.control_button {
+  color: #e6e6e6;
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  margin: 0 10px;
+  font-size: 26px;
+}
+
+.button_play {
+  font-size: 44px;
+}
+
+.title,
+.artist {
+  display: block;
+  text-align: left;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.artist {
+  font-size: 14px;
+}
+
+.button_vote {
+  font-size: 30px;
+  color: #81b71a;
+  margin: 5px;
+}
+
+.button_down {
+  color: #fff;
+}
+
+@media (min-width: 480px) {
+  .input {
+    width: 300px;
+  }
+}
+
+@media (min-width: 768px) {
+  ul {
+    padding: 0 20px;
+  }
+
+  li {
+    margin: 0 10px 10px;
+    float: left;
+  }
+}

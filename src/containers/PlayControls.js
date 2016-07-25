@@ -2,10 +2,10 @@ import React from 'react';
 import Start from '../components/Start';
 import Stop from '../components/Stop';
 import Next from '../components/Next';
-import { playTrack } from '../actions';
+import { playTrack, stopTrack } from '../actions';
 import { incrementTrackIndex } from '../utils';
-import { controlStyles } from '../styles';
 import { connect } from 'react-redux';
+import style from '../style.css';
 
 class PlayControls extends React.Component {
   constructor() {
@@ -42,17 +42,20 @@ class PlayControls extends React.Component {
 
   nextTrack() {
     const { currentTrackIndex } = this.state;
-    const { trackList } = this.props;
+    const { trackList, dispatchStop } = this.props;
 
     if (!trackList.length) return;
 
     this.stopPlaying();
 
+    // do not jump to the next track when on the last item
     if (currentTrackIndex === trackList.length - 1) {
       this.setState({
         currentTrackIndex: incrementTrackIndex(currentTrackIndex, trackList.length),
       });
+      dispatchStop(-1);
     } else {
+    // start playing next track automatically
       this.setState({
         currentTrackIndex: incrementTrackIndex(currentTrackIndex, trackList.length),
       }, this.startPlaying);
@@ -61,9 +64,9 @@ class PlayControls extends React.Component {
 
   render() {
     return (
-      <div style={controlStyles}>
-        <Start handleClick={this.startPlaying} />
+      <div className={style.container_control}>
         <Stop handleClick={this.stopPlaying} />
+        <Start handleClick={this.startPlaying} />
         <Next handleClick={this.nextTrack} />
       </div>
     );
@@ -73,6 +76,7 @@ class PlayControls extends React.Component {
 PlayControls.propTypes = {
   trackList: React.PropTypes.array,
   dispatchPlay: React.PropTypes.func,
+  dispatchStop: React.PropTypes.func,
 };
 
 const mapStateToProps = ({ trackList }) => ({
@@ -81,6 +85,7 @@ const mapStateToProps = ({ trackList }) => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatchPlay: index => dispatch(playTrack(index)),
+  dispatchStop: index => dispatch(stopTrack(index)),
 });
 
 export default connect(

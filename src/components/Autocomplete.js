@@ -1,8 +1,11 @@
 import React from 'react';
-import { autoCompleteStyles } from '../styles';
+import style from '../style.css';
 
 const Autocomplete = ({ hint, handleClick }) =>
-  <div style={autoCompleteStyles} onClick={handleClick} >
+  <div
+    onClick={handleClick}
+    className={style.autocomplete}
+  >
     {hint}
   </div>;
 

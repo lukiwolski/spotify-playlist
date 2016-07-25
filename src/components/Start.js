@@ -1,8 +1,14 @@
 import React from 'react';
-import { buttonStyles } from '../styles';
+import style from '../style.css';
+import { FaPlayCircle } from 'react-icons/lib/fa';
 
 const Start = ({ handleClick }) =>
-  <button style={buttonStyles} onClick={handleClick}>Start</button>;
+  <button
+    onClick={handleClick}
+    className={`${style.control_button} ${style.button_play}`}
+  >
+    <FaPlayCircle />
+  </button>;
 
 Start.propTypes = {
   handleClick: React.PropTypes.func,

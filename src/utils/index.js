@@ -1,11 +1,6 @@
 import { UPVOTE, DOWNVOTE } from '../actions';
 import R from 'ramda';
 
-const loggit = x => {
-  console.log(x);
-  return x;
-};
-
 const getName = R.prop('name');
 
 const getId = R.prop('id');
@@ -60,11 +55,12 @@ export const incrementTrackIndex = (index, length) => (
   R.add(index, 1) < length ? R.add(index, 1) : 0
 );
 
-export const updateLikes = (index, list, action) =>
+const updateLikesProps = (index, list, action) =>
   list.map((val, i) => {
     if (i === index) {
       let likes = val.likes;
 
+      // do not allow likes to be a negative value
       if (action === DOWNVOTE && val.likes !== 0) {
         likes = R.subtract(val.likes, 1);
       }
@@ -78,6 +74,32 @@ export const updateLikes = (index, list, action) =>
         likes,
       };
     }
+
     return val;
   });
 
+
+const sortByLikes = R.sort((a, b) => b.likes - a.likes);
+
+export const updateLikes = (index, list, action) => {
+  const currentlyPlayedIndex = R.findIndex(R.propEq('isPlaying', true))(list);
+
+  // do nothing when liked item behind currently playing track in queue
+  if (currentlyPlayedIndex >= index) {
+    return list;
+  } else if (currentlyPlayedIndex === -1) {
+    // sort every track if nothing is playing
+    return sortByLikes(updateLikesProps(index, list, action));
+  }
+  // sort only elements after playing item
+  const itemsBehind = R.slice(0, currentlyPlayedIndex + 1, list);
+  let itemsAfter = R.slice(currentlyPlayedIndex + 1, list.length, list);
+  const slicedIndex = index - itemsBehind.length;
+
+  itemsAfter = sortByLikes(updateLikesProps(slicedIndex, itemsAfter, action));
+
+  return [
+    ...itemsBehind,
+    ...itemsAfter,
+  ];
+};

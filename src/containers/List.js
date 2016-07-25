@@ -1,10 +1,10 @@
 import React from 'react';
 import Track from '../components/Track';
 import { connect } from 'react-redux';
-import { listStyles } from '../styles';
+import style from '../style.css';
 
 const List = ({ trackList }) =>
-  <ul style={listStyles}>
+  <ul >
     {trackList.map((track, index) =>
       <Track
         key={index}
@@ -12,6 +12,7 @@ const List = ({ trackList }) =>
         title={track.title}
         artist={track.artist}
         cover={track.image}
+        isPlaying={track.isPlaying}
       />
     )}
   </ul>;

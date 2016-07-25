@@ -1,8 +1,14 @@
 import React from 'react';
-import { buttonStyles } from '../styles';
+import style from '../style.css';
+import { FaStop } from 'react-icons/lib/fa';
 
 const Stop = ({ handleClick }) =>
-  <button style={buttonStyles} onClick={handleClick}>Stop</button>;
+  <button
+    onClick={handleClick}
+    className={style.control_button}
+  >
+    <FaStop />
+  </button>;
 
 Stop.propTypes = {
   handleClick: React.PropTypes.func,

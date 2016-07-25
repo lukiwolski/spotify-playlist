@@ -1,8 +1,14 @@
 import React from 'react';
-import { buttonStyles } from '../styles';
+import style from '../style.css';
+import { FaStepForward } from 'react-icons/lib/fa';
 
 const Next = ({ handleClick }) =>
-  <button style={buttonStyles} onClick={handleClick}>Next</button>;
+  <button
+    onClick={handleClick}
+    className={style.control_button}
+  >
+    <FaStepForward />
+  </button>;
 
 Next.propTypes = {
   handleClick: React.PropTypes.func,
