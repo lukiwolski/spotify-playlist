@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --content-base app/ --history-api-fallback"
+    "start": "npm run build && npm run build:server && node server.bundle.js",
+    "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress",
+    "build:server": "webpack --config webpack.server.config.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "data.maybe": "^1.2.2",
+    "express": "^4.14.0",
     "ramda": "^0.21.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",

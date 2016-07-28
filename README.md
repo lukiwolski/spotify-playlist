@@ -1,2 +1,3 @@
-INSTALLATION:
-  - Clone repo, run npm install from main directory, then run npm start for a web packbuild
+Live version deployed with zeit now at:
+
+https://spotify-queue-caxutheywl.now.sh/
